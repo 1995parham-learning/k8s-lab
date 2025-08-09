@@ -1,0 +1,9 @@
+# Install Traefik
+install:
+    helm upgrade --install --namespace=operators --create-namespace --dependency-update keycloak-operator .
+    @echo "✅ Keycloak Operator installed successfully."
+
+# Remove Traefik
+remove:
+    helm uninstall --namespace=operators keycloak-operator
+    @echo "✅ Keycloak Operator Ingress removed."

@@ -1,0 +1,9 @@
+apiVersion: v2
+name: keycloak-operator
+description: Keycloak Operator Helm Chart
+type: application
+version: 0.1.0
+appVersion: 0.0.0
+# there is no chart for keycloak operator, you need to
+# manually download deployment and crds from:
+# https://www.keycloak.org/operator/installation#_installing_by_using_kubectl_without_operator_lifecycle_manager
