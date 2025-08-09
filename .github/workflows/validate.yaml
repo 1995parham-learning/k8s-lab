@@ -1,0 +1,29 @@
+name: Validate Setup
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    name: Validate Setup
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Just
+        uses: extractions/setup-just@v2
+
+      - name: Set up KinD (Kubernetes in Docker)
+        uses: helm/kind-action@v1.10.0
+
+      - name: Run 'just setup'
+        run: just setup
