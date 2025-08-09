@@ -23,7 +23,7 @@ jobs:
         uses: extractions/setup-just@v2
 
       - name: Set up KinD (Kubernetes in Docker)
-        uses: helm/kind-action@v1.10.0
+        uses: helm/kind-action@v1.12.0
 
       - name: Run 'just setup'
         run: just setup
