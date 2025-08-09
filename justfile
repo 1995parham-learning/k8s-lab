@@ -19,7 +19,7 @@ setup:
         echo "✅ Cluster '{{ cluster_name }}' already exists."; \
     fi
     @echo "\n✅ Cluster is ready. Install tools with 'just install <tool_name>'"
-    @just install nginx-ingress
+    @just install traefik
 
 # Install a tool by calling its own justfile
 install tool:
