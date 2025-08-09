@@ -18,8 +18,8 @@ Before you begin, make sure you have the following tools installed on your syste
 
 1.  **Clone the repository:**
     ```bash
-    git clone <your-repository-url>
-    cd <your-repository-name>
+    git clone http://github.com/1995parham-learning/k8s-lab
+    cd k8s-lab
     ```
 
 2.  **Set up the cluster:**
