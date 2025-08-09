@@ -1,4 +1,4 @@
-# 🧪 Kube Playground
+# 🧪 Kubernetes Lab
 
 This repository is my personal Kubernetes home lab. It uses **[kind](https://kind.sigs.k8s.io/)** (Kubernetes in Docker) for fast,
 local cluster creation and **[just](https://github.com/casey/just)** for simple command automation.
