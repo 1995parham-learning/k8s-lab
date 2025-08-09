@@ -4,10 +4,9 @@ manifest_url := "https://raw.githubusercontent.com/kubernetes/ingress-nginx/main
 install:
     @echo "Applying NGINX Ingress manifest..."
     kubectl apply -f {{ manifest_url }}
-    @sleep 5
     @echo "⏳ Waiting for Ingress controller pod to be ready..."
     kubectl wait --namespace ingress-nginx \
-      --for=condition=ready pod \
+      --for=condition=create,ready pod \
       --selector=app.kubernetes.io/component=controller \
       --timeout=120s
     @echo "✅ NGINX Ingress installed successfully."
