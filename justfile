@@ -25,7 +25,7 @@ setup:
 install tool:
     @if [ -d "experiments/{{ tool }}" ]; then \
         echo "▶️  Delegating to 'experiments/{{ tool }}/justfile'..."; \
-        just --justfile experiments/{{ tool }}/justfile install; \
+        just experiments/{{ tool }}/install; \
     else \
         echo "❌ Error: Tool '{{ tool }}' not found in 'experiments/' directory."; \
         exit 1; \
@@ -35,7 +35,7 @@ install tool:
 remove tool:
     @if [ -d "experiments/{{ tool }}" ]; then \
         echo "▶️  Delegating to 'experiments/{{ tool }}/justfile'..."; \
-        just --justfile experiments/{{ tool }}/justfile remove; \
+        just experiments/{{ tool }}/tremove; \
     else \
         echo "❌ Error: Tool '{{ tool }}' not found in 'experiments/' directory."; \
         exit 1; \
