@@ -4,11 +4,7 @@ config_file := "kind-config.yaml"
 # Show available commands
 default:
     @echo "🚀 Kube Playground Commands:"
-    @echo
-    @echo "  just setup                # Create the base kind cluster."
-    @echo "  just install <tool>       # Install a tool (e.g., 'just install nginx-ingress')."
-    @echo "  just remove <tool>        # Remove a tool (e.g., 'just remove nginx-ingress')."
-    @echo "  just delete               # Delete the entire kind cluster."
+    @just --list
 
 # Create the kind cluster
 setup:
