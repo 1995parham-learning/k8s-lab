@@ -1,9 +1,9 @@
 # Install Traefik
 install:
-    helm upgrade --install --namespace=traefik-v2 --create-namespace --dependency-update traefik .
+    helm upgrade --install --namespace=traefik --create-namespace --dependency-update traefik .
     @echo "✅ Traefik Ingress installed successfully."
 
 # Remove Traefik
 remove:
-    helm uninstall --namespace=traefik-v2 traefik
+    helm uninstall --namespace=traefik traefik
     @echo "✅ Traefik Ingress removed."

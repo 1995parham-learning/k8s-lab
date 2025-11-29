@@ -4,5 +4,5 @@ type: application
 version: 0.0.0
 dependencies:
   - name: traefik
-    version: 37.0.0
+    version: 37.4.0
     repository: oci://ghcr.io/traefik/helm
