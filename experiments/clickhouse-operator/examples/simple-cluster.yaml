@@ -1,0 +1,86 @@
+---
+# Example ClickHouse cluster with 1 shard and 2 replicas
+# Apply with: kubectl apply -f examples/simple-cluster.yaml -n clickhouse
+apiVersion: clickhouse.altinity.com/v1
+kind: ClickHouseInstallation
+metadata:
+  name: simple-cluster
+spec:
+  configuration:
+    clusters:
+      - name: cluster1
+        layout:
+          shardsCount: 1
+          replicasCount: 2
+    users:
+      default/password: ""
+      default/networks/ip:
+        - "::/0"
+    zookeeper:
+      nodes:
+        - host: clickhouse-keeper
+          port: 2181
+  defaults:
+    templates:
+      dataVolumeClaimTemplate: data-volume
+      podTemplate: clickhouse-pod
+  templates:
+    volumeClaimTemplates:
+      - name: data-volume
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+    podTemplates:
+      - name: clickhouse-pod
+        spec:
+          containers:
+            - name: clickhouse
+              image: clickhouse/clickhouse-server:24.8
+              resources:
+                requests:
+                  memory: 512Mi
+                  cpu: 100m
+                limits:
+                  memory: 1Gi
+                  cpu: 500m
+---
+# ClickHouse Keeper for coordination (ZooKeeper alternative)
+apiVersion: clickhouse-keeper.altinity.com/v1
+kind: ClickHouseKeeperInstallation
+metadata:
+  name: clickhouse-keeper
+spec:
+  configuration:
+    clusters:
+      - name: keeper
+        layout:
+          replicasCount: 1
+  defaults:
+    templates:
+      dataVolumeClaimTemplate: keeper-data
+      podTemplate: keeper-pod
+  templates:
+    volumeClaimTemplates:
+      - name: keeper-data
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+    podTemplates:
+      - name: keeper-pod
+        spec:
+          containers:
+            - name: clickhouse-keeper
+              image: clickhouse/clickhouse-keeper:24.8
+              resources:
+                requests:
+                  memory: 256Mi
+                  cpu: 100m
+                limits:
+                  memory: 512Mi
+                  cpu: 250m

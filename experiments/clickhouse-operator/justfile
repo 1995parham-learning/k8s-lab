@@ -1,0 +1,9 @@
+# Install ClickHouse Operator
+install:
+    helm upgrade --install --namespace=clickhouse --create-namespace --dependency-update clickhouse-operator .
+    @echo "ClickHouse Operator installed successfully."
+
+# Remove ClickHouse Operator
+remove:
+    helm uninstall --namespace=clickhouse clickhouse-operator
+    @echo "ClickHouse Operator removed."
