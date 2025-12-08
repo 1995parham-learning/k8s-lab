@@ -4,26 +4,6 @@ nats:
     labels:
       app: jetstream
       team: main
-  podTemplate:
-    patch:
-      - op: add
-        path: /spec/affinity
-        value:
-          podAntiAffinity:
-            preferredDuringSchedulingIgnoredDuringExecution:
-              - weight: 100
-                podAffinityTerm:
-                  labelSelector:
-                    matchExpressions:
-                      - key: "app.kubernetes.io/name"
-                        operator: In
-                        values:
-                          - nats
-                      - key: "app"
-                        operator: In
-                        values:
-                          - jetstream
-                  topologyKey: "kubernetes.io/hostname"
   natsBox:
     enabled: false
   config:
