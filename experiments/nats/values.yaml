@@ -360,13 +360,7 @@ nats:
     gateway:
       enabled: false
     leafnodes:
-      enabled: true
-      # merge or patch the leafnodes config
-      # https://docs.nats.io/running-a-nats-service/configuration/leafnodes/leafnode_conf
-      merge:
-        authorization:
-          user: admin
-          password: admin
+      enabled: false
     jetstream:
       enabled: true
       memoryStore:
@@ -380,19 +374,10 @@ nats:
           name: nats-gp3
           enabled: true
           size: 10Gi
-          storageClassName: gp3-csi
   container:
     env:
-      ADMIN_USERNAME:
-        valueFrom:
-          secretKeyRef:
-            name: nats-system-account
-            key: admin_username
-      ADMIN_PASSWORD:
-        valueFrom:
-          secretKeyRef:
-            name: nats-system-account
-            key: admin_password
+      ADMIN_USERNAME: "admin"
+      ADMIN_PASSWORD: "password"
     merge:
       resources:
         requests:
@@ -405,16 +390,8 @@ nats:
           ephemeral-storage: 1Gi
   promExporter:
     enabled: true
-    env:
-      GODEBUG: multipathtcp=0
     podMonitor:
       enabled: true
-  # Define a Pod Disruption Budget for the stateful set
-  # ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
-  podDisruptionBudget:
-    enabled: true
-    maxUnavailable: 1
-    # minAvailable: 1
   configMap:
     merge:
       data:
