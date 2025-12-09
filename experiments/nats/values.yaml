@@ -11,11 +11,10 @@ nats:
       00$include: auth.conf
       accounts:
         lebanon:
+          jetstream: enabled
           users:
-            - user: lb-user
-              password: user
-            - user: lb-default
-              password: default
+            - { user: lb-user, password: user }
+            - { user: lb-default, password: default }
         "$SYS":
           users:
             - { user: << $ADMIN_USERNAME >>, password: << $ADMIN_PASSWORD >> }
