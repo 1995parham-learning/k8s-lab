@@ -70,3 +70,23 @@ nats:
           authorization {
           }
           no_auth_user: "default"
+  extraResources:
+    - apiVersion: v1
+      kind: Service
+      metadata:
+        name:
+          $tplYaml: >
+            {{ include "nats.fullname" $ }}-lb
+        labels:
+          $tplYaml: |
+            {{ include "nats.labels" $ }}
+      spec:
+        type: LoadBalancer
+        selector:
+          $tplYaml: |
+            {{ include "nats.selectorLabels" $ }}
+        ports:
+          - name: nats
+            port: 4222
+            targetPort: nats
+            protocol: TCP
