@@ -10,6 +10,11 @@ nats:
     merge:
       00$include: auth.conf
       accounts:
+        iraq:
+          jetstream: enabled
+          users:
+            - { user: user, password: password }
+            - { user: default, password: default }
         lebanon:
           jetstream: enabled
           users:
@@ -63,13 +68,5 @@ nats:
       data:
         auth.conf: |-
           authorization {
-            default_permissions = {
-              publish = ">"
-              subscribe = ">"
-            }
-            users = [
-              {user: smapp-pickup-soul-keeper, password: password},
-              {user: default, password: default}
-            ]
           }
           no_auth_user: "default"
