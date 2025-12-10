@@ -6,6 +6,11 @@ nats:
       team: main
   natsBox:
     enabled: false
+  service:
+    merge:
+      metadata:
+        annotations:
+          service.kubernetes.io/topology-aware-hints: Auto
   config:
     merge:
       00$include: auth.conf
