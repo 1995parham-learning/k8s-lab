@@ -10,25 +10,30 @@ nats:
     merge:
       metadata:
         annotations:
-          service.kubernetes.io/topology-aware-hints: Auto
+          service.kubernetes.io/topology-mode: Auto
   config:
     merge:
-      00$include: auth.conf
       accounts:
         iraq:
           jetstream: enabled
           users:
-            - { user: user, password: password }
-            - { user: default, password: default }
+            - user: user
+              password: password
+            - user: default
+              password: default
         lebanon:
           jetstream: enabled
           users:
-            - { user: lb-user, password: user }
-            - { user: lb-default, password: default }
+            - user: lb-user
+              password: user
+            - user: lb-default
+              password: default
         "$SYS":
           users:
-            - { user: << $ADMIN_USERNAME >>, password: << $ADMIN_PASSWORD >> }
+            - user: admin
+              password: admin
       system_account: "$SYS"
+      no_auth_user: "default"
     cluster:
       noAdvertise: true
       enabled: true
@@ -51,9 +56,6 @@ nats:
           enabled: true
           size: 10Gi
   container:
-    env:
-      ADMIN_USERNAME: "admin"
-      ADMIN_PASSWORD: "password"
     merge:
       resources:
         requests:
@@ -68,13 +70,6 @@ nats:
     enabled: false
     podMonitor:
       enabled: true
-  configMap:
-    merge:
-      data:
-        auth.conf: |-
-          authorization {
-          }
-          no_auth_user: "default"
   extraResources:
     - apiVersion: v1
       kind: Service
