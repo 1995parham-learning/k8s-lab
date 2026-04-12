@@ -31,10 +31,9 @@ spec:
       offsets.topic.replication.factor: 3
       transaction.state.log.min.isr: 2
       transaction.state.log.replication.factor: 3
+      allow.everyone.if.no.acl.found: "true"
     authorization:
       type: simple
-      superUsers:
-        - ANONYMOUS
     listeners:
       - name: plain
         port: 9092
