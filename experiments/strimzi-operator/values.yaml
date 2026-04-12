@@ -1,3 +1,5 @@
 ---
 # Override values for strimzi-kafka-operator subchart
-strimzi-kafka-operator: {}
+strimzi-kafka-operator:
+  watchNamespaces:
+    - kafka
