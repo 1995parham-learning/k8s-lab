@@ -1,0 +1,45 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: metric
+  labels:
+    strimzi.io/cluster: core
+spec:
+  partitions: 3
+  replicas: 3
+  config:
+    retention.ms: "86400000"
+    retention.bytes: "1073741824"
+    segment.ms: "86400000"
+    segment.bytes: "1073741824"
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: portfolio-wallet-events
+  labels:
+    strimzi.io/cluster: core
+spec:
+  partitions: 3
+  replicas: 3
+  config:
+    retention.ms: "604800000"
+    segment.ms: "86400000"
+    segment.bytes: "1073741824"
+    cleanup.policy: delete
+    min.insync.replicas: "2"
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: portfolio-wallet-checkpoint
+  labels:
+    strimzi.io/cluster: core
+spec:
+  partitions: 1
+  replicas: 3
+  config:
+    segment.ms: "86400000"
+    segment.bytes: "134217728"
+    cleanup.policy: compact
+    min.insync.replicas: "2"

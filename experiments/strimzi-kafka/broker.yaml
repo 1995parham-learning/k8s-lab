@@ -1,0 +1,39 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  labels:
+    strimzi.io/cluster: core
+  name: broker
+spec:
+  replicas: 3
+  roles:
+    - broker
+  storage:
+    type: jbod
+    volumes:
+      - id: 0
+        type: persistent-claim
+        size: 10Gi
+        deleteClaim: false
+  resources:
+    limits:
+      cpu: "500m"
+      memory: "1500Mi"
+    requests:
+      cpu: "200m"
+      memory: "1500Mi"
+  jvmOptions:
+    -Xms: 1000m
+    -Xmx: 1000m
+  template:
+    pod:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    strimzi.io/cluster: core
+                    strimzi.io/broker-role: "true"
+                topologyKey: kubernetes.io/hostname

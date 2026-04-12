@@ -1,0 +1,39 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  labels:
+    strimzi.io/cluster: core
+  name: controller
+spec:
+  replicas: 3
+  roles:
+    - controller
+  storage:
+    type: jbod
+    volumes:
+      - id: 0
+        type: persistent-claim
+        size: 5Gi
+        deleteClaim: false
+  resources:
+    limits:
+      cpu: "500m"
+      memory: "1500Mi"
+    requests:
+      cpu: "100m"
+      memory: "1500Mi"
+  jvmOptions:
+    -Xms: 1000m
+    -Xmx: 1000m
+  template:
+    pod:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    strimzi.io/cluster: core
+                    strimzi.io/controller-role: "true"
+                topologyKey: kubernetes.io/hostname

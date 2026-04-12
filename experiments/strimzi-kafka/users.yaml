@@ -1,0 +1,72 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: core-portfolio-producer
+  labels:
+    strimzi.io/cluster: core
+spec:
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: topic
+          name: portfolio-wallet-events
+          patternType: literal
+        operations:
+          - Write
+          - Describe
+      - resource:
+          type: topic
+          name: portfolio-wallet-checkpoint
+          patternType: literal
+        operations:
+          - Write
+          - Describe
+          - Read
+      - resource:
+          type: transactionalId
+          name: portfolio-core-
+          patternType: prefix
+        operations:
+          - Write
+          - Describe
+      - resource:
+          type: cluster
+        operations:
+          - IdempotentWrite
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: portfolio-consumer
+  labels:
+    strimzi.io/cluster: core
+spec:
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: topic
+          name: portfolio-wallet-events
+          patternType: literal
+        operations:
+          - Read
+          - Describe
+      - resource:
+          type: topic
+          name: portfolio-wallet-checkpoint
+          patternType: literal
+        operations:
+          - Read
+          - Describe
+      - resource:
+          type: group
+          name: portfolio-
+          patternType: prefix
+        operations:
+          - Read
+          - Describe

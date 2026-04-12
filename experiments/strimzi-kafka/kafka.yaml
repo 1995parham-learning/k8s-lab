@@ -1,0 +1,47 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  annotations:
+    strimzi.io/kraft: enabled
+    strimzi.io/node-pools: enabled
+  name: core
+spec:
+  entityOperator:
+    topicOperator:
+      resources:
+        limits:
+          cpu: "500m"
+          memory: "500Mi"
+        requests:
+          cpu: "200m"
+          memory: "500Mi"
+    userOperator:
+      resources:
+        limits:
+          cpu: "500m"
+          memory: "500Mi"
+        requests:
+          cpu: "200m"
+          memory: "500Mi"
+  kafka:
+    config:
+      auto.create.topics.enable: "false"
+      default.replication.factor: 3
+      min.insync.replicas: 2
+      offsets.topic.replication.factor: 3
+      transaction.state.log.min.isr: 2
+      transaction.state.log.replication.factor: 3
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
+        authentication:
+          type: tls
+  kafkaExporter:
+    groupRegex: .*
+    topicRegex: .*
