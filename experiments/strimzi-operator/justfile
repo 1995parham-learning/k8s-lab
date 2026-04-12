@@ -1,0 +1,9 @@
+# Install Strimzi Operator
+install:
+    helm upgrade --install --namespace=strimzi --create-namespace --dependency-update strimzi-operator .
+    @echo "Strimzi Operator installed successfully."
+
+# Remove Strimzi Operator
+remove:
+    helm uninstall --namespace=strimzi strimzi-operator
+    @echo "Strimzi Operator removed."

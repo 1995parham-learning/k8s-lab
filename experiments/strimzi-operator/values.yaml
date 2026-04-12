@@ -1,0 +1,3 @@
+---
+# Override values for strimzi-kafka-operator subchart
+strimzi-kafka-operator: {}
