@@ -3,7 +3,9 @@ name: keycloak-operator
 description: Keycloak Operator Helm Chart
 type: application
 version: 0.1.0
-appVersion: 0.0.0
-# there is no chart for keycloak operator, you need to
-# manually download deployment and crds from:
-# https://www.keycloak.org/operator/installation#_installing_by_using_kubectl_without_operator_lifecycle_manager
+appVersion: 26.3.2
+# Keycloak does not publish an official operator Helm chart, so the CRDs and
+# operator manifest under templates/ are vendored from upstream:
+# https://github.com/keycloak/keycloak-k8s-resources/tree/main/kubernetes
+# Bump `version` in the justfile and run `just sync` to update them, then set
+# appVersion above to match.

@@ -1,9 +1,22 @@
-# Install Traefik
+# Keycloak release to track. Bump this and run `just sync` to update the CRDs
+# and operator manifest from upstream.
+version := "26.3.2"
+
+base := "https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/" + version + "/kubernetes"
+
+# Sync CRDs and operator manifest from the upstream Keycloak release
+sync:
+    curl -fsSL "{{base}}/keycloaks.k8s.keycloak.org-v1.yml" -o templates/keycloaks.k8s.keycloak.org-v1.yml
+    curl -fsSL "{{base}}/keycloakrealmimports.k8s.keycloak.org-v1.yml" -o templates/keycloakrealmimports.k8s.keycloak.org-v1.yml
+    curl -fsSL "{{base}}/kubernetes.yml" -o templates/kubernetes.yml
+    @echo "✅ Synced CRDs and operator manifest from Keycloak {{version}}."
+
+# Install Keycloak Operator
 install:
     helm upgrade --install --namespace=operators --create-namespace --dependency-update keycloak-operator .
     @echo "✅ Keycloak Operator installed successfully."
 
-# Remove Traefik
+# Remove Keycloak Operator
 remove:
     helm uninstall --namespace=operators keycloak-operator
-    @echo "✅ Keycloak Operator Ingress removed."
+    @echo "✅ Keycloak Operator removed."
